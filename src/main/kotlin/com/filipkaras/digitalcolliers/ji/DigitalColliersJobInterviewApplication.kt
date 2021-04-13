@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class DigitalColliersJobInterviewApplication
 
 fun main(args: Array<String>) {
-	runApplication<DigitalColliersJobInterviewApplication>(*args)
+    runApplication<DigitalColliersJobInterviewApplication>(*args)
 }
