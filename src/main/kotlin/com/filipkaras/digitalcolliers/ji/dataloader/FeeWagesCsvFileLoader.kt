@@ -12,7 +12,7 @@ class FeeWagesCsvFileLoader(
 ) {
 
     fun load(fileName: String) {
-        feeWageRepository.saveAll(loadFeeWages(fileName))
+        feeWageRepository.setFeeWages(loadFeeWages(fileName))
     }
 
     private fun loadFeeWages(fileName: String): List<FeeWage> {

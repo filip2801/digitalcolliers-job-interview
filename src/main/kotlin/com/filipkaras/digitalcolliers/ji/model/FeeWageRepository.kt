@@ -7,7 +7,7 @@ class FeeWageRepository  {
 
     private var orderedFeeWages: List<FeeWage> = listOf()
 
-    fun saveAll(feeWages: List<FeeWage>) {
+    fun setFeeWages(feeWages: List<FeeWage>) {
         orderedFeeWages = feeWages.sortedBy { it.transactionValueLessThan }
     }
 

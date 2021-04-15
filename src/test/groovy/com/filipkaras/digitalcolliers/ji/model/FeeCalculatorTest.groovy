@@ -11,7 +11,7 @@ class FeeCalculatorTest extends Specification {
     @Unroll
     def "should calculate fees for #amount"() {
         given:
-        feeWageRepository.saveAll([
+        feeWageRepository.setFeeWages([
                 new FeeWage(BigDecimal.valueOf(10), BigDecimal.valueOf(2)),
                 new FeeWage(BigDecimal.valueOf(20), BigDecimal.valueOf(1)),
                 new FeeWage(BigDecimal.valueOf(30), BigDecimal.valueOf(0.5))
