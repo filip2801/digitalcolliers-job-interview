@@ -14,20 +14,22 @@ class FeeCalculatorTest extends Specification {
         feeWageRepository.saveAll([
                 new FeeWage(BigDecimal.valueOf(10), BigDecimal.valueOf(2)),
                 new FeeWage(BigDecimal.valueOf(20), BigDecimal.valueOf(1)),
-                new FeeWage(BigDecimal.valueOf(30), BigDecimal.valueOf(0.5)),
+                new FeeWage(BigDecimal.valueOf(30), BigDecimal.valueOf(0.5))
         ])
 
         expect:
         feeCalculator.calculateFee(amount) == expectedFee
 
         where:
-        amount                 | expectedFee
-        BigDecimal.valueOf(0)  | BigDecimal.valueOf(0)
-        BigDecimal.valueOf(5)  | BigDecimal.valueOf(0.1)
-        BigDecimal.valueOf(10) | BigDecimal.valueOf(0.1)
-        BigDecimal.valueOf(15) | BigDecimal.valueOf(0.15)
-        BigDecimal.valueOf(30) | BigDecimal.valueOf(0)
-        BigDecimal.valueOf(31) | BigDecimal.valueOf(0)
+        amount                   | expectedFee
+        BigDecimal.valueOf(0)    | BigDecimal.valueOf(0)
+        BigDecimal.valueOf(5)    | BigDecimal.valueOf(0.1)
+        BigDecimal.valueOf(10)   | BigDecimal.valueOf(0.1)
+        BigDecimal.valueOf(11.1) | BigDecimal.valueOf(0.11)
+        BigDecimal.valueOf(11.9) | BigDecimal.valueOf(0.11)
+        BigDecimal.valueOf(15)   | BigDecimal.valueOf(0.15)
+        BigDecimal.valueOf(30)   | BigDecimal.valueOf(0)
+        BigDecimal.valueOf(31)   | BigDecimal.valueOf(0)
     }
 
 }
