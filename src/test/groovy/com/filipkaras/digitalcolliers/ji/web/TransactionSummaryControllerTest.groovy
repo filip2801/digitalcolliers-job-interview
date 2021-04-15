@@ -5,8 +5,9 @@ import com.filipkaras.digitalcolliers.ji.model.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.web.server.LocalServerPort
-import org.springframework.http.HttpStatus
-import org.springframework.http.ResponseEntity
+import org.springframework.http.*
+import org.springframework.util.MultiValueMap
+import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestTemplate
 
 import java.time.LocalDateTime
@@ -18,6 +19,10 @@ class TransactionSummaryControllerTest extends IntegrationTestSpecification {
     int port
     @Value('${server.servlet.context-path:/}')
     String contextPath
+    @Value('${auth.username}')
+    String username
+    @Value('${auth.password}')
+    String password
 
     @Autowired
     TransactionRepository transactionRepository
@@ -134,10 +139,41 @@ class TransactionSummaryControllerTest extends IntegrationTestSpecification {
         response.getBody().isEmpty()
     }
 
+    def "should return 401 when credentials are incorrect"() {
+        when:
+        callEndpointWithoutProperCredentials("/transactions/fee?customer_id=1")
+
+        then:
+        thrown(HttpClientErrorException.Unauthorized)
+    }
+
     private ResponseEntity<List> callEndpoint(String url) {
+        return callEndpoint(url, headersForAuthenticatedUser())
+    }
+
+    private ResponseEntity<List> callEndpointWithoutProperCredentials(String url) {
+        return callEndpoint(url, headersForNotAuthenticatedUser())
+    }
+
+    private ResponseEntity<List> callEndpoint(String url, HttpHeaders httpHeaders) {
         def absoluteUrl = "http://localhost:${port}${contextPath}/${url}"
 
-        return restTemplate.getForEntity(absoluteUrl, List)
+        def request = new HttpEntity<String>(httpHeaders)
+        return restTemplate.exchange(absoluteUrl, HttpMethod.GET, request, List)
+    }
+
+    private HttpHeaders headersForAuthenticatedUser() {
+        headersForCredentials(username, password)
+    }
+
+    private HttpHeaders headersForNotAuthenticatedUser() {
+        headersForCredentials("user", UUID.randomUUID().toString())
+    }
+
+    private MultiValueMap headersForCredentials(String username, String password) {
+        def headers = new HttpHeaders()
+        headers.setBasicAuth(username, password)
+        return headers
     }
 
 }

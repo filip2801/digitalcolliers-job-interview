@@ -13,3 +13,7 @@ data:
     path: src/main/resources/transactions.csv
   feeWages:
     path: src/main/resources/fee_wages.csv
+
+auth:
+  username: someuser
+  password: xyz
