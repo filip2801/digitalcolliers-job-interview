@@ -1,24 +1,22 @@
 package com.filipkaras.digitalcolliers.ji.parser
 
+import com.filipkaras.digitalcolliers.ji.IntegrationTestSpecification
 import com.filipkaras.digitalcolliers.ji.model.CustomerRepository
 import com.filipkaras.digitalcolliers.ji.model.TransactionRepository
-import spock.lang.Specification
+import org.springframework.beans.factory.annotation.Autowired
 
 import java.time.LocalDateTime
 import java.time.Month
 
-class TransactionCsvFileLoaderTest extends Specification {
+class TransactionDataLoaderTest extends IntegrationTestSpecification {
 
-    def transactionRepository = new TransactionRepository()
-    def customerRepository = new CustomerRepository()
-
-    def transactionCsvFileLoader = new TransactionCsvFileLoader(transactionRepository, customerRepository)
+    @Autowired
+    TransactionRepository transactionRepository
+    @Autowired
+    CustomerRepository customerRepository
 
     def "should load transactions from file"() {
-        when:
-        transactionCsvFileLoader.load("src/test/resources/transactions-test.csv")
-
-        then:
+        expect:
         def transactions = transactionRepository.findAll()
         transactions.size() == 4
 

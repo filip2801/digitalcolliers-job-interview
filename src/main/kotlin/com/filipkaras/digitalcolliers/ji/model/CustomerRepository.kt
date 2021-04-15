@@ -1,16 +1,7 @@
 package com.filipkaras.digitalcolliers.ji.model
 
+import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.stereotype.Component
 
 @Component
-class CustomerRepository {
-    val storage: HashMap<Long, Customer> = hashMapOf()
-
-    fun save(customer: Customer) {
-        storage[customer.id] = customer
-    }
-
-    fun findAll(): List<Customer> {
-        return storage.values.toList()
-    }
-}
+interface CustomerRepository : MongoRepository<Customer, Long>

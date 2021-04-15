@@ -1,0 +1,7 @@
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
+
+data:
+  transactions:
+    path: src/test/resources/transactions-test.csv

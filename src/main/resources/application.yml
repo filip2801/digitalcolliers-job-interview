@@ -1,0 +1,13 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27888
+      username: mongoadmin
+      password: secret
+      database: dc-transactions
+      authentication-database: admin
+
+data:
+  transactions:
+    path: src/main/resources/transactions.csv

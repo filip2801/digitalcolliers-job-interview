@@ -22,10 +22,12 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("com.github.doyaaaaaken:kotlin-csv-jvm:0.15.1")
+	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.spockframework:spock-core:1.3-groovy-2.5")
 	testImplementation("org.spockframework:spock-spring:1.3-groovy-2.5")
+	testImplementation("org.testcontainers:testcontainers:1.15.2")
 }
 
 tasks.withType<KotlinCompile> {
