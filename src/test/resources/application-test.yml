@@ -5,3 +5,5 @@ logging:
 data:
   transactions:
     path: src/test/resources/transactions-test.csv
+  feeWages:
+    path: src/test/resources/fee_wages-test.csv

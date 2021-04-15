@@ -11,3 +11,5 @@ spring:
 data:
   transactions:
     path: src/main/resources/transactions.csv
+  feeWages:
+    path: src/main/resources/fee_wages.csv

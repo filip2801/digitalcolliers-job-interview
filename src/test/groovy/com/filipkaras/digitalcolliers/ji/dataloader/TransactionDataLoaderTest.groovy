@@ -1,4 +1,4 @@
-package com.filipkaras.digitalcolliers.ji.parser
+package com.filipkaras.digitalcolliers.ji.dataloader
 
 import com.filipkaras.digitalcolliers.ji.IntegrationTestSpecification
 import com.filipkaras.digitalcolliers.ji.model.CustomerRepository
