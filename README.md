@@ -73,3 +73,11 @@ example:
 ```
 curl -X GET -u user1:pass1 "http://localhost:8080/transactions/fee?customer_id=ALL" 
 ```
+
+## What can be added:
+* file validation
+* Dockerfile
+* performance tests
+* CI
+* metrics (jvm, number of errors)
+* health check endpoint

@@ -25,9 +25,11 @@ class FeeWagesCsvFileLoader(
             .drop(1)
             .map {
                 FeeWage(
-                    it[0].replace(",", ".").toBigDecimal(),
-                    it[1].replace(",", ".").toBigDecimal()
+                    toBigDecimal(it[0].replace(",", ".")),
+                    toBigDecimal(it[1].replace(",", "."))
                 )
             }
     }
+
+    private fun toBigDecimal(value: String) = value.replace(",", ".").toBigDecimal()
 }

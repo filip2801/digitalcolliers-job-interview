@@ -4,12 +4,12 @@ import org.springframework.stereotype.Component
 import java.math.BigDecimal
 import java.math.RoundingMode
 
+private val ONE_HUNDREDTH = BigDecimal.valueOf(1, 2)
+
 @Component
 class FeeCalculator(
     private val feeWageRepository: FeeWageRepository
 ) {
-
-    private val ONE_HUNDREDTH = BigDecimal.valueOf(1, 2)
 
     fun calculateFee(amount: BigDecimal): BigDecimal {
         val feeWage = feeWageRepository.findAllOrderedByAmountLessThan()
