@@ -3,8 +3,11 @@ package com.filipkaras.digitalcolliers.ji.dataloader
 import com.filipkaras.digitalcolliers.ji.model.FeeWage
 import com.filipkaras.digitalcolliers.ji.model.FeeWageRepository
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import mu.KotlinLogging
 import org.springframework.stereotype.Component
 import java.io.File
+
+private val logger = KotlinLogging.logger {}
 
 @Component
 class FeeWagesCsvFileLoader(
@@ -12,7 +15,9 @@ class FeeWagesCsvFileLoader(
 ) {
 
     fun load(fileName: String) {
+        logger.info { "Loads fee wages from file $fileName" }
         feeWageRepository.setFeeWages(loadFeeWages(fileName))
+        logger.info { "Fee wages loaded" }
     }
 
     private fun loadFeeWages(fileName: String): List<FeeWage> {

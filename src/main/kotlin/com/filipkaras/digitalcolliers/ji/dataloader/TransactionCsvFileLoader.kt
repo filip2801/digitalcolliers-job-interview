@@ -4,10 +4,13 @@ import com.filipkaras.digitalcolliers.ji.dto.CustomerDto
 import com.filipkaras.digitalcolliers.ji.dto.TransactionDto
 import com.filipkaras.digitalcolliers.ji.model.*
 import com.github.doyaaaaaken.kotlincsv.dsl.csvReader
+import mu.KotlinLogging
 import org.springframework.stereotype.Component
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+
+private val logger = KotlinLogging.logger {}
 
 @Component
 class TransactionCsvFileLoader(
@@ -18,8 +21,10 @@ class TransactionCsvFileLoader(
     private val DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss")
 
     fun load(fileName: String) {
+        logger.info { "Cleaning up existing transactions" }
         transactionRepository.deleteAll()
 
+        logger.info { "Loads transactions from file $fileName" }
         val transactions = loadTransactions(fileName)
 
         transactions
@@ -31,6 +36,8 @@ class TransactionCsvFileLoader(
         transactions
             .map { Customer(it.customerDto.id, it.customerDto.firstName, it.customerDto.lastName) }
             .forEach { customerRepository.save(it) }
+
+        logger.info { "Transactions loaded" }
     }
 
     private fun loadTransactions(fileName: String): List<TransactionDto> {
