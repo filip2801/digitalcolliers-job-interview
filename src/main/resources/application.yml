@@ -2,7 +2,7 @@ spring:
   data:
     mongodb:
       host: localhost
-      port: 27888
+      port: 27017
       username: mongoadmin
       password: secret
       database: dc-transactions
@@ -10,9 +10,9 @@ spring:
 
 data:
   transactions:
-    path: src/main/resources/transactions.csv
+    path: pathToTransactionFile
   feeWages:
-    path: src/main/resources/fee_wages.csv
+    path: pathToFeeWagesFile
 
 auth:
   username: someuser
