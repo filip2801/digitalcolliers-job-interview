@@ -1,6 +1,7 @@
 package com.filipkaras.digitalcolliers.ji.web
 
 import com.filipkaras.digitalcolliers.ji.IntegrationTestSpecification
+import com.filipkaras.digitalcolliers.ji.infrastructure.log.TransactionFeeRequestLogRepository
 import com.filipkaras.digitalcolliers.ji.model.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
@@ -32,6 +33,8 @@ class TransactionSummaryControllerTest extends IntegrationTestSpecification {
     FeeWageRepository feeWageRepository
     @Autowired
     RestTemplate restTemplate
+    @Autowired
+    TransactionFeeRequestLogRepository logRepository
 
     def setup() {
         cleanDb()
@@ -73,6 +76,9 @@ class TransactionSummaryControllerTest extends IntegrationTestSpecification {
         transactionFees[0].fee == 3.06
         transactionFees[0].numberOfTransactions == 2
         transactionFees[0].lastTransactionDate == "10.03.2020 15:30:45"
+
+        and:
+        assertLogs(transactionFees)
     }
 
     def "should fetch transactions fees summary for two customer"() {
@@ -98,6 +104,9 @@ class TransactionSummaryControllerTest extends IntegrationTestSpecification {
 
         def transactionFees = response.getBody()
         transactionFees.size() == 2
+
+        and:
+        assertLogs(transactionFees)
     }
 
     def "should fetch transactions fees summary for ALL customer"() {
@@ -119,6 +128,9 @@ class TransactionSummaryControllerTest extends IntegrationTestSpecification {
 
         def transactionFees = response.getBody()
         transactionFees.size() == 2
+
+        and:
+        assertLogs(transactionFees)
     }
 
     def "should return empty list when customer does not exist"() {
@@ -174,6 +186,17 @@ class TransactionSummaryControllerTest extends IntegrationTestSpecification {
         def headers = new HttpHeaders()
         headers.setBasicAuth(username, password)
         return headers
+    }
+
+    private void assertLogs(List transactionFees) {
+        def logs = logRepository.findAll()
+        transactionFees.each { transactionFee ->
+            assert logs.find { log ->
+                log.customerId == transactionFee.customerId &&
+                        log.fee == transactionFee.fee &&
+                        log.username == username
+            }
+        }
     }
 
 }
